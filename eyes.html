@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eye tracker</title>
+    <style type="text/css">
+        body {
+            color: #333333;
+            background-color: whitesmoke 
+        }
+        #webgazerVideoFeed{
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="mydiv">
+        <h3 style="color:#C0C0C0" align="right">
+            Click on a few locations within the screen<br>
+            while looking purposefully at the cursor.<br>
+            Both clicks and cursor movements<br>
+            make the predictions more accurate. 
+        </h3>
+    </div>
+
+<script src="build/webgazer.js"></script>
+<script>
+    window.onload = function() {
+        //webgazer.setRegression('ridge') /* currently must set regression and tracker */
+           //.setTracker('clmtrackr')
+             webgazer.setGazeListener(function(data, clock) {
+                data == null ? console.log(data):console.log(data.x); 
+                data == null ? console.log(data):console.log(data.x);
+                /* data is an object containing an x and y key which are the x and 
+                y prediction coordinates (no bounds limiting) */
+               //console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+            })
+            .begin()
+            .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+
+        var width = 640;
+        var height = 480;
+        var topDist = '10px';
+        var leftDist = '400pxpx';
+        
+        var setup = function() {
+            var video = document.getElementById('webgazerVideoFeed');
+            video.style.display = 'block';
+            video.style.position = 'absolute';
+            video.style.top = topDist;
+            video.style.left = leftDist;
+            video.width = width;
+            video.height = height;
+            video.style.margin = '0px';
+
+            webgazer.params.imgWidth = width;
+            webgazer.params.imgHeight = height;
+
+            var overlay = document.createElement('canvas');
+            overlay.id = 'overlay';
+            overlay.style.position = 'absolute';
+            overlay.width = width;
+            overlay.height = height;
+            overlay.style.top = topDist;
+            overlay.style.left = leftDist;
+            overlay.style.margin = '0px';
+
+            document.body.appendChild(overlay);
+
+            var cl = webgazer.getTracker().clm;
+
+            function drawLoop() {
+                requestAnimFrame(drawLoop);
+                overlay.getContext('2d').clearRect(0,0,width,height);
+                if (cl.getCurrentPosition()) {
+                    cl.draw(overlay);
+                }
+            }
+            drawLoop();
+        };
+
+        function checkIfReady() {
+            if (webgazer.isReady()) {
+                setup();
+            } else {
+                setTimeout(checkIfReady, 100);
+            }
+        }
+        setTimeout(checkIfReady,100);
+    };
+
+
+    window.onbeforeunload = function() {
+        //webgazer.end(); //Uncomment if you want to save the data even if you reload the page.
+        window.localStorage.clear(); //Comment out if you want to save data across different sessions 
+    }
+</script>
+
+</body>
+</html>
+
+
