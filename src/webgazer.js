@@ -57,8 +57,8 @@
     var eventTypes = ['click', 'move'];
     
     //movelistener timeout clock parameters
-    var moveClock = performance.now();
-    webgazer.params.moveTickSize = 100; //milliseconds
+    //var moveClock = performance.now();
+    webgazer.params.moveTickSize = 50; //milliseconds
 
     //currently used tracker and regression models, defaults to clmtrackr and linear regression
     var curTracker = new webgazer.tracker.ClmGaze();

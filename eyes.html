@@ -2,6 +2,51 @@
 <html>
 <head>
     <title>Eye tracker</title>
+
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+</head>
+<body>
+    <div class="calibre" id="calibro">1</div>
+    <div class="elcontainer">
+        <div class="container">
+          <header><h2>Accesos Oculares</h2><h3 class="aviso">A traves de los movimientos oculares podemos detectar el procesamiento interno cerebral en terminos de sistemas representacionales de cada persona. Divididos en Visuales, Auditivos y Kinestesicos <a href="http://programacionneurolinguisticahoy.com/claves-de-acceso-ocular/">+ info.</a></h3></header>
+          <div class="row">
+            <div class="square VC met">Visual Creado</div>
+            <div class="square"></div>
+            <div class="square VR met">Visual Recordado</div>
+          </div>
+          <div class="row">
+            <div class="square AC met">Auditivo Creado</div>
+            <div class="vidSquare">
+                <div id="contVideo"></div>
+            </div>
+            <div class="square AR met">Auditivo Recordado</div>
+          </div>
+          <div class="row">
+            <div class="square KI met">Kinestesia Sensaciones</div>
+            <div class="square"></div>
+            <div class="square DI met">Dialogo Interno</div>
+          </div>
+          <footer>
+          <ul>
+          <li>      
+              <a id="calibrelo" href="#">| CALIBRAR |</a>
+          </li>
+            <li>VR = <span id="vr"></span></li>
+            <li>AR = <span id="ar"></span></li>
+            <li>DI = <span id="di"></span></li>
+            <li>VC = <span id="vc"></span></li>
+            <li>AC = <span id="ac"></span></li>
+            <li>KI = <span id="ki"></span></li>
+          </ul>
+          </footer>
+        </div>
+
+
+    </div>
+
     <style type="text/css">
         body {
             color: #333333;
@@ -106,53 +151,8 @@
         text-align: center;
       }*/
       ul li{display: inline-block;}
-
+      footer{text-align: center;}
     </style>
-
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-
-</head>
-<body>
-<div class="calibre" id="calibro">1</div>
-<div class="elcontainer">
-    <div class="container">
-      <header><h2>Accesos Oculares</h2><h3 class="aviso">A traves de los movimientos oculares podemos detectar el procesamiento interno cerebral en terminos de sistemas representacionales de cada persona. Divididos en Visuales, Auditivos y Kinestesicos <a href="http://programacionneurolinguisticahoy.com/claves-de-acceso-ocular/">+ info.</a></h3></header>
-      <div class="row">
-        <div class="square VC met">Visual Creado</div>
-        <div class="square"></div>
-        <div class="square VR met">Visual Recordado</div>
-      </div>
-      <div class="row">
-        <div class="square AC met">Auditivo Creado</div>
-        <div class="vidSquare">
-            <div id="contVideo"></div>
-        </div>
-        <div class="square AR met">Auditivo Recordado</div>
-      </div>
-      <div class="row">
-        <div class="square KI met">Kinestesia Sensaciones</div>
-        <div class="square"></div>
-        <div class="square DI met">Dialogo Interno</div>
-      </div>
-      <footer>
-      <ul>
-      <li>      
-          <a id="calibrelo" href="#">| CALIBRAR |</a>
-      </li>
-        <li>VR = <span id="vr"></span></li>
-        <li>AR = <span id="ar"></span></li>
-        <li>DI = <span id="di"></span></li>
-        <li>VC = <span id="vc"></span></li>
-        <li>AC = <span id="ac"></span></li>
-        <li>KI = <span id="ki"></span></li>
-      </ul>
-      </footer>
-    </div>
-
-
-</div>
-
-
 <script src="build/webgazer.js"></script>
 
 <script>
@@ -166,7 +166,8 @@
 
         var AR=1, DI=1, VR=1, AC=1, KI=1, VC=1; 
 
-       alert("Inicia calibrando en las esquinas. Repite el proceso para mayor precision");
+       alert("Despues de reconocer tu rostro, calibra la pantalla haciendo click en los punto de las esquinas. Repite el proceso para mayor precision");
+
         $("#calibrelo").on("click", function(){$("#calibro").show()})
         var blink = function(pos){
             $(".met").css('background','none');

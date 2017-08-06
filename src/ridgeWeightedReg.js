@@ -112,7 +112,7 @@
         this.eyeFeaturesClicks = new webgazer.util.DataWindow(dataWindow);
 
         //sets to one second worth of cursor trail
-        this.trailTime = 1000;
+        this.trailTime = 5000;
         this.trailDataWindow = this.trailTime / webgazer.params.moveTickSize;
         this.screenXTrailArray = new webgazer.util.DataWindow(trailDataWindow);
         this.screenYTrailArray = new webgazer.util.DataWindow(trailDataWindow);
