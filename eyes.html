@@ -7,65 +7,206 @@
             color: #333333;
             background-color: whitesmoke 
         }
-        #webgazerVideoFeed{
+        .aviso{ padding: 1em; }
+        #contVideo{
+            position: relative;
             border: 1px solid black;
+            text-align: center;
+            margin: 0 auto;
+            width: 200px;
         }
+        #contVideo:after {
+          content: " ";
+          display: table;
+          clear: both;
+        }
+        .container{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+      }
+        .container {
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -o-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          background-color: #afafaf;
+          -webkit-flex-direction: column;
+          -moz-flex-direction: column;
+          -ms-flex-direction: column;
+          -o-flex-direction: column;
+          flex-direction: column;
+      }
+        .row{ 
+          background-color: #e5e5e5;
+          -webkit-flex: 5;
+          -moz-flex: 5;
+          -ms-flex: 5;
+          -o-flex: 5;
+          flex: 5;
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-flex-direction: row;
+          -moz-flex-direction: row;
+          -ms-flex-direction: row;
+          -o-flex-direction: row;
+          flex-direction: row;
+          }
+        .square{
+          background-color: #cacaca;
+          -webkit-flex: 4;
+          -moz-flex: 4;
+          -ms-flex: 4;
+          -o-flex: 4;
+          flex: 4;
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          text-align: center;
+          -webkit-justify-content: center;
+          -moz-justify-content: center;
+          -ms-justify-content: center;
+          -o-justify-content: center;
+          justify-content: center;
+          -webkit-flex-flow: column wrap;
+          -moz-flex-flow: column wrap;
+          -ms-flex-flow: column wrap;
+          -o-flex-flow: column wrap;
+          flex-flow: column wrap;
+      }
+      .vidSquare{
+        background: black;
+      }
     </style>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 </head>
 <body>
-    <div id="mydiv">
-        <h3 style="color:#C0C0C0" align="right">
-            Click on a few locations within the screen<br>
-            while looking purposefully at the cursor.<br>
-            Both clicks and cursor movements<br>
-            make the predictions more accurate. 
-        </h3>
+
+<div class="elcontainer">
+    <div class="container">
+      <header><h2 class="aviso">A traves de los movimientos oculares podemos detectar el procesamiento interno cerebral en terminos de sistemas representacionales de cada persona. Divididos en Visuales, Auditivos y Kinestesicos</h2></header>
+      <div class="row">
+        <div class="square VC">Visual Creado</div>
+        <div class="square"></div>
+        <div class="square VR">Visual Recordado</div>
+      </div>
+      <div class="row">
+        <div class="square AC">Auditivo Creado</div>
+        <div class="vidSquare">
+            <div id="contVideo"></div>
+        </div>
+        <div class="square AR">Auditivo Recordado</div>
+      </div>
+      <div class="row">
+        <div class="square KI">Kinestesia Sensaciones</div>
+        <div class="square"></div>
+        <div class="square DI">Dialogo Interno</div>
+      </div>
+      <footer>Accesos Oculares 2017</footer>
     </div>
 
-<script src="build/webgazer.js"></script>
-<script>
-    window.onload = function() {
-        //webgazer.setRegression('ridge') /* currently must set regression and tracker */
-           //.setTracker('clmtrackr')
-             webgazer.setGazeListener(function(data, clock) {
-                data == null ? console.log(data):console.log(data.x); 
-                data == null ? console.log(data):console.log(data.x);
-                /* data is an object containing an x and y key which are the x and 
-                y prediction coordinates (no bounds limiting) */
-               //console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
-            })
-            .begin()
-            .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
 
-        var width = 640;
-        var height = 480;
-        var topDist = '10px';
-        var leftDist = '400pxpx';
+</div>
+
+
+<script src="build/webgazer.js"></script>
+
+<script>
+   // window.onload = function() {
+    $(function() {
+        var altoCanal = window.innerHeight / 3;
+        var mitad =  window.innerWidth / 2;
+
+        var visual = altoCanal;
+        var auditivo = altoCanal * 2;
+        var kinestesico = altoCanal * 3;
+
+       
+        alert("Calibra con el mouse");
+        
+        var blink = function(pos){
+            $("."+pos).css('color','red')
+        }
+        var noblink = function(){
+            $(".square").css('color','black')
+        }
+        
+
+        var ubicar = function(xpos, ypos){
+            console.log(xpos+" : : "+ypos)
+            if ( xpos > mitad ){
+                //console.log("> Derecha");
+/*                ypos <= visual ? console.log("Visual Recordado"): "";
+                ypos <= auditivo ? console.log("Auditivo Recordado"): "";
+                ypos <= kinestesico ? console.log("Dialogo Interno"): "";*/
+                ypos <= visual ? blink("VR") : noblink();
+                ypos <= auditivo ? blink("AR") : noblink();
+                ypos <= kinestesico ? blink("DI") : noblink();
+                
+            }else if(xpos < mitad){
+                //console.log("< Izquierda");
+                ypos <= visual ? blink("VC") : noblink();
+                ypos <= auditivo ? blink("AC") : noblink();
+                ypos <= kinestesico ? blink("KI") : noblink();
+                
+            }
+
+        }
+
+        //webgazer.setRegression('ridge') /* currently must set regression and tracker */
+        //.setTracker('clmtrackr')
+        webgazer.setGazeListener(function(data, clock) {
+        data == null ? console.log(data):ubicar(data.x, data.y); 
+        /* data is an object containing an x and y key which are the x and 
+        y prediction coordinates (no bounds limiting) */
+        //console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+        })
+        .begin()
+        .showPredictionPoints(true); /* shows a square every 100 milliseconds where current prediction is */
+
+        var width = 200;
+        var height = 150;
+        var topDist = '0px';
+        var leftDist = 0;
         
         var setup = function() {
+
+            var contVideo = document.getElementById('contVideo');            
             var video = document.getElementById('webgazerVideoFeed');
+            var overlay = document.createElement('canvas');
+
             video.style.display = 'block';
             video.style.position = 'absolute';
             video.style.top = topDist;
             video.style.left = leftDist;
             video.width = width;
             video.height = height;
-            video.style.margin = '0px';
 
             webgazer.params.imgWidth = width;
             webgazer.params.imgHeight = height;
 
-            var overlay = document.createElement('canvas');
             overlay.id = 'overlay';
             overlay.style.position = 'absolute';
             overlay.width = width;
+            overlay.style.display = 'block';
+
             overlay.height = height;
             overlay.style.top = topDist;
             overlay.style.left = leftDist;
-            overlay.style.margin = '0px';
 
-            document.body.appendChild(overlay);
+            contVideo.appendChild(video);
+            contVideo.appendChild(overlay);
+
 
             var cl = webgazer.getTracker().clm;
 
@@ -87,7 +228,7 @@
             }
         }
         setTimeout(checkIfReady,100);
-    };
+    });
 
 
     window.onbeforeunload = function() {
