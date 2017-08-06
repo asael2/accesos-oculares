@@ -10,7 +10,7 @@
         .aviso{ padding: 1em; }
         #contVideo{
             position: relative;
-            border: 1px solid black;
+            border: 1px solid red;
             text-align: center;
             margin: 0 auto;
             width: 200px;
@@ -26,8 +26,6 @@
           left: 0;
           width: 100%;
           height: 100vh;
-      }
-        .container {
           display: -webkit-box;
           display: -moz-box;
           display: -ms-flexbox;
@@ -61,6 +59,7 @@
           }
         .square{
           background-color: #cacaca;
+          font-size: 2em;
           -webkit-flex: 4;
           -moz-flex: 4;
           -ms-flex: 4;
@@ -86,33 +85,65 @@
       .vidSquare{
         background: black;
       }
+      .calibre{
+        border-radius: 50%; padding: 10px 15px; border: 3px solid black; 
+        background: red; color: black; text-align: center; 
+        position: absolute; left: 5px; top: 5px; z-index: 10; cursor: crosshair;
+      }
+     /* .calibre:before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        content: "\274c"; 
+        font-size: 20px; 
+        color: #FFF;
+        line-height: 12px;
+        text-align: center;
+      }*/
+      ul li{display: inline-block;}
+
     </style>
+
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 </head>
 <body>
-
+<div class="calibre" id="calibro">1</div>
 <div class="elcontainer">
     <div class="container">
-      <header><h2 class="aviso">A traves de los movimientos oculares podemos detectar el procesamiento interno cerebral en terminos de sistemas representacionales de cada persona. Divididos en Visuales, Auditivos y Kinestesicos</h2></header>
+      <header><h2 class="aviso">A traves de los movimientos oculares podemos detectar el procesamiento interno cerebral en terminos de sistemas representacionales de cada persona. Divididos en Visuales, Auditivos y Kinestesicos <a href="http://programacionneurolinguisticahoy.com/claves-de-acceso-ocular/">+ info.</a></h2></header>
       <div class="row">
-        <div class="square VC">Visual Creado</div>
+        <div class="square VC met">Visual Creado</div>
         <div class="square"></div>
-        <div class="square VR">Visual Recordado</div>
+        <div class="square VR met">Visual Recordado</div>
       </div>
       <div class="row">
-        <div class="square AC">Auditivo Creado</div>
+        <div class="square AC met">Auditivo Creado</div>
         <div class="vidSquare">
             <div id="contVideo"></div>
         </div>
-        <div class="square AR">Auditivo Recordado</div>
+        <div class="square AR met">Auditivo Recordado</div>
       </div>
       <div class="row">
-        <div class="square KI">Kinestesia Sensaciones</div>
+        <div class="square KI met">Kinestesia Sensaciones</div>
         <div class="square"></div>
-        <div class="square DI">Dialogo Interno</div>
+        <div class="square DI met">Dialogo Interno</div>
       </div>
-      <footer>Accesos Oculares 2017</footer>
+      <footer>
+      <ul>
+      <li>      
+          <a id="calibrelo" href="#">CALIBRAR</a>
+      </li>
+        <li>VR = <span id="vr"></span></li>
+        <li>AR = <span id="ar"></span></li>
+        <li>DI = <span id="di"></span></li>
+        <li>VC = <span id="vc"></span></li>
+        <li>AC = <span id="ac"></span></li>
+        <li>KI = <span id="ki"></span></li>
+      </ul>
+      </footer>
     </div>
 
 
@@ -126,38 +157,32 @@
     $(function() {
         var altoCanal = window.innerHeight / 3;
         var mitad =  window.innerWidth / 2;
-
         var visual = altoCanal;
         var auditivo = altoCanal * 2;
         var kinestesico = altoCanal * 3;
 
-       
-        alert("Calibra con el mouse");
-        
+       alert("Inicia calibrando las X rojas, si es necesario calibra nuevamente.");
+        $("#calibrelo").on("click", function(){$("#calibro").show()})
         var blink = function(pos){
-            $("."+pos).css('color','red')
-        }
-        var noblink = function(){
-            $(".square").css('color','black')
+            $(".met").css('background','none');
+            $("."+pos).css('background','cyan');
         }
         
 
         var ubicar = function(xpos, ypos){
-            console.log(xpos+" : : "+ypos)
+            console.log(xpos+" < X :: Y > "+ypos);
+
             if ( xpos > mitad ){
-                //console.log("> Derecha");
-/*                ypos <= visual ? console.log("Visual Recordado"): "";
-                ypos <= auditivo ? console.log("Auditivo Recordado"): "";
-                ypos <= kinestesico ? console.log("Dialogo Interno"): "";*/
-                ypos <= visual ? blink("VR") : noblink();
-                ypos <= auditivo ? blink("AR") : noblink();
-                ypos <= kinestesico ? blink("DI") : noblink();
+                console.log("> Derecha");
+                if(ypos <= auditivo ){blink("AR")};
+                if(ypos <= kinestesico){blink("DI")};
+                if(ypos <= visual){blink("VR")};
                 
             }else if(xpos < mitad){
-                //console.log("< Izquierda");
-                ypos <= visual ? blink("VC") : noblink();
-                ypos <= auditivo ? blink("AC") : noblink();
-                ypos <= kinestesico ? blink("KI") : noblink();
+                console.log("< Izquierda");
+                if(ypos <= auditivo ){blink("AC")};
+                if(ypos <= kinestesico) {blink("KI")};
+                if(ypos <= visual){blink("VC")};
                 
             }
 
@@ -219,6 +244,39 @@
             }
             drawLoop();
         };
+
+        $("#calibro").on("click", function(){
+
+            switch($("#calibro").text()) {
+                case "1":
+                    $(this).css("left", "inherit");
+                    $(this).css("right", "10px");
+                    $(this).text("2");
+                break;
+                case "2":
+                    $(this).css("top", "inherit");
+                    $(this).css("bottom", "10px");
+                    $(this).text("3");
+
+                break;
+                case "3":
+                    $(this).css("right", "inherit");
+                    $(this).css("left", "10px");
+                    $(this).text("4");
+
+                break;
+                case "4":
+                    $(this).css("top", "10px");
+                    $(this).css("bottom", "inherit");
+                    $(this).text("1");
+
+                    $(this).hide()
+                break;
+                default:
+                    $(this).hide()
+            }     
+        })       
+        
 
         function checkIfReady() {
             if (webgazer.isReady()) {
