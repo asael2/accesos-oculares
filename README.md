@@ -4,10 +4,10 @@
 ## Accesos oculares
 
 Using eye tracking, we want to correlate the eye tracking information with the representational system that is being used by the user. 
-More information? send a line please, to: artyficialsas at gmail.com
+More information? send a line please, to: asael2 at gmail.com
 
 ## Install
-After download, simply run **eyes.html** into your browser
+After download, simply run **eyes.html** into your browser.
 
 ## Browser Support
 
