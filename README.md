@@ -7,7 +7,7 @@ Using eye tracking, we want to correlate the eye tracking information with the r
 More information? send a line please, to: artyficialsas at gmail.com
 
 ## Install
-Simply run **eyes.html** into your browser
+After download, simply run **eyes.html** into your browser
 
 ## Browser Support
 
